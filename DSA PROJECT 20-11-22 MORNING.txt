@@ -1,0 +1,692 @@
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+char NAME[50];
+int AGE;
+char PACKAGE_NAME[50];
+int PACKAGE_NUMBER;
+int PRICE;
+int DURATION;
+char MODE_NAME[50];
+int MODE_NUMBER;
+int MODE_EXTRA_TAX;
+int PASSWORD;
+int NO_OF_PASS_10;
+int TOTAL_PRICE;
+int NO_OF_PASS_below_10;
+char HOTEL_NAME[50];
+int HOTEL_PRICE;
+int HOTEL_NUMBER;
+
+
+struct node
+{
+    int code;
+    char name[100];
+    int age;
+    int package_booked;
+    struct node *next;
+};
+
+
+struct node_package
+{
+   int package_number;
+   char package_name[100];
+   float price;
+   int duration_in_days;
+   struct node_package *next1;
+};
+
+
+struct node_mode
+{
+    int mode_number;
+    char mode_name[100];
+    int mode_price;
+    struct node_mode *next2;
+};
+
+
+struct node_hotel
+{
+    int hotel_number;
+    char hotel_name[100];
+    int hotel_price;
+    struct node_hotel *next3;
+};
+
+
+class mode
+{
+    public:
+    struct node_mode *head2,*tail2;
+
+    mode()
+    {
+        head2=NULL;
+        tail2=NULL;
+    }
+
+      void add_node_mode(int m,int p,char mn[100])
+  {
+      struct node_mode *temp,*t;
+      temp=new struct node_mode;
+      temp->mode_number=m;
+      temp->mode_price=p;
+      strcpy(temp->mode_name,mn);
+      t=head2;
+
+      if(head2==NULL)
+      {
+          head2=temp;
+          tail2=temp;
+          head2->next2=NULL;
+      }
+      else
+      {
+          tail2->next2=temp;
+          tail2=temp;
+          temp->next2=NULL;
+
+      }
+  }
+
+   void display_mode()
+  {
+      struct node_mode *temp;
+      temp=head2;
+
+      cout<<endl;
+      cout<<"$$$$$$ INFORMATION OF MODES OF TRANSPORT $$$$$$"<<endl<<endl;
+
+      while(temp->next2!=NULL)
+      {
+          cout<<"MODE'S ID:"<<temp->mode_number<<endl;
+          cout<<"MODE'S NAME:"<<temp->mode_name<<endl<<endl;
+      cout<<"MODE'S TAX:"<<temp->mode_price<<endl<<endl;
+          temp=temp->next2;
+      }
+          cout<<"MODE'S ID:"<<tail2->mode_number<<endl;
+          cout<<"MODE'S NAME:"<<tail2->mode_name<<endl<<endl;
+          cout<<"MODE'S TAX:"<<tail2->mode_price<<endl<<endl;
+  }
+
+  void  selected_mode(int n)
+  {
+      struct node_mode *temp;
+      temp=head2;
+      int f=0;
+      while(temp!=NULL)
+      {
+          if(temp->mode_number==n)
+          {
+              strcpy(MODE_NAME,temp->mode_name);
+              MODE_NUMBER=temp->mode_number;
+              MODE_EXTRA_TAX=temp->mode_price;
+              f=1;
+
+  cout<<endl<<"YOUR MODE GOT SUCCESSFULLY SELECTED!!!"<<endl<<endl;
+              break;
+
+          }
+         temp=temp->next2;
+      }
+      if(f==0)
+      {
+          cout<<"sorry you entered wrong mode number!!!"<<endl;
+      }
+  }
+};
+
+
+class hotel
+{
+    public:
+    struct node_hotel *head3,*tail3;
+
+    hotel()
+    {
+        head3=NULL;
+        tail3=NULL;
+    }
+
+
+      void add_node_hotel(int m,int p,char mn[100])
+  {
+      struct node_hotel *temp,*t;
+      temp=new struct node_hotel;
+      temp->hotel_number=m;
+      strcpy(temp->hotel_name,mn);
+      temp->hotel_price=p;
+      t=head3;
+      if(head3==NULL)
+      {
+          head3=temp;
+          tail3=temp;
+          head3->next3=NULL;
+      }
+      else
+      {
+          tail3->next3=temp;
+          tail3=temp;
+          temp->next3=NULL;
+
+      }
+  }
+
+
+   void display_hotel()
+  {
+      struct node_hotel *temp;
+      temp=head3;
+      cout<<endl;
+      cout<<"$$$$$$ INFORMATION OF HOTEL $$$$$$"<<endl<<endl;
+      while(temp->next3!=NULL)
+      {
+          cout<<"HOTEL ID:"<<temp->hotel_number<<endl;
+          cout<<"HOTEL NAME:"<<temp->hotel_name<<endl;
+          cout<<"HOTEL PRICE:"<<temp->hotel_price<<endl<<endl;
+          temp=temp->next3;
+      }
+          cout<<"HOTEL ID:"<<tail3->hotel_number<<endl;
+          cout<<"HOTEL NAME:"<<tail3->hotel_name<<endl;
+          cout<<"HOTEL PRICE:"<<tail3->hotel_price<<endl<<endl;
+  }
+
+
+  void  selected_hotel(int n)
+  {
+      struct node_hotel *temp;
+      temp=head3;
+      int f=0;
+      while(temp!=NULL)
+      {
+          if(temp->hotel_number==n)
+          {
+              strcpy(HOTEL_NAME,temp->hotel_name);
+              HOTEL_NUMBER=temp->hotel_number;
+              HOTEL_PRICE=temp->hotel_price;
+              f=1;
+
+  cout<<endl<<"YOUR HOTEL GOT SUCCESSFULLY SELECTED!!!"<<endl;
+              break;
+
+          }
+         temp=temp->next3;
+      }
+      if(f==0)
+      {
+          cout<<"sorry you entered wrong hotel number!!!"<<endl;
+      }
+  }
+};
+
+
+class person
+{
+    public:
+
+    struct node *head,*tail;
+    person()
+    {
+        head=NULL;
+        tail=NULL;
+    }
+
+
+      void add_node(int c,char n[100],int a,int pb)
+  {
+
+      struct node *temp,*t;
+      temp=new struct node;
+      temp->code=c;
+      temp->age=a;
+      temp->package_booked=pb;
+      strcpy(temp->name,n);
+      t=head;
+
+      if(head==NULL)
+      {
+          head=temp;
+          tail=temp;
+          head->next=NULL;
+      }
+      else
+      {
+          tail->next=temp;
+          tail=temp;
+          temp->next=NULL;
+
+      }
+  }
+
+   void display()
+  {
+
+      struct node *temp;
+      temp=head;
+      cout<<"$$$$$$ INFORMATION OF USER $$$$$$"<<endl<<endl;
+
+      while(temp->next!=NULL)
+      {
+          cout<<"USER'S ID:"<<temp->code<<endl;
+          cout<<"USER'S NAME:"<<temp->name<<endl;
+          cout<<"USER'S AGE:"<<temp->age<<endl;
+          cout<<"LAST PACKAGE BOOKED:"<<temp->package_booked<<endl<<endl;
+          temp=temp->next;
+      }
+          cout<<"USER'S ID:"<<tail->code<<endl;
+          cout<<"USER'S NAME:"<<tail->name<<endl;
+          cout<<"USER'S AGE:"<<tail->age<<endl;
+          cout<<"LAST PACKAGE BOOKED:"<<tail->package_booked<<endl<<endl;
+
+  }
+
+  int find_person(int x)
+  {
+      struct node* temp;
+      temp=head;
+
+      while(temp!=NULL)
+      {
+          if(temp->code==x)
+          {
+              strcpy(NAME,temp->name);
+              AGE=temp->age;
+              PASSWORD=temp->code;
+              cout<<endl<<"Welcome "<<temp->name<<endl;
+              cout<<"your last purchased package was "<<temp->package_booked<<endl;
+
+              return 1;
+          }
+          temp=temp->next;
+      }
+          if(temp==NULL)
+          {
+              return 0;
+          }
+  }
+};
+
+
+class package
+{
+    public:
+    struct node_package *head1,*tail1;
+
+    package()
+    {
+        head1=NULL;
+        tail1=NULL;
+    }
+
+      void add_node_package(int pn,char name[100],int p,int d)
+  {
+      struct node_package *temp,*t;
+      temp=new struct node_package;
+      temp->package_number=pn;
+      temp->price=p;
+      temp->duration_in_days=d;
+      strcpy(temp->package_name,name);
+      t=head1;
+      if(head1==NULL)
+      {
+          head1=temp;
+          tail1=temp;
+          head1->next1=NULL;
+      }
+      else
+      {
+          tail1->next1=temp;
+          tail1=temp;
+          temp->next1=NULL;
+
+      }
+  }
+
+
+   void display_package()
+  {
+      struct node_package *temp;
+      temp=head1;
+      cout<<endl;
+
+      cout<<"$$$$$$ INFORMATION OF PACKAGES $$$$$$"<<endl<<endl;
+
+      while(temp->next1!=NULL)
+      {
+          cout<<"PACKAGE NAME:"<<temp->package_name<<endl;
+          cout<<"PACKAGE NUMBER:"<<temp->package_number<<endl;
+          cout<<"PRICE:"<<temp->price<<endl;
+          cout<<"DURATION IN DAYS:"<<temp->duration_in_days<<endl<<endl;
+          temp=temp->next1;
+      }
+
+          cout<<"PACKAGE NAME:"<<tail1->package_name<<endl;
+          cout<<"PACKAGE NUMBER:"<<tail1->package_number<<endl;
+          cout<<"PRICE:"<<tail1->price<<endl;
+          cout<<"DURATION IN DAYS:"<<tail1->duration_in_days<<endl<<endl;
+  }
+
+ void  selected_package(int n)
+  {
+      struct node_package *temp;
+      temp=head1;
+      int f=0;
+
+      while(temp!=NULL)
+      {
+          if(temp->package_number==n)
+          {
+              strcpy(PACKAGE_NAME,temp->package_name);
+              PACKAGE_NUMBER=temp->package_number;
+              PRICE=temp->price;
+              DURATION=temp->duration_in_days;
+              f=1;
+
+  cout<<endl<<"YOUR PACKAGE GOT SUCCESSFULLY SELECTED!!!"<<endl;
+              break;
+
+          }
+         temp=temp->next1;
+      }
+      if(f==0)
+      {
+          cout<<"sorry you entered wrong package number!!!";
+          cout<<endl;
+      }
+  }
+};
+
+
+void print_information()
+{
+      cout<<endl;
+    cout<<"$$$$ INfORMATION OF PASSENGERS $$$$"<<endl<<endl;
+
+    cout<<"NAME :"<<NAME<<endl;
+
+    cout<<"AGE :"<<AGE<<endl;
+
+    cout<<"PACKAGE NAME :"<<PACKAGE_NAME<<endl;
+
+    cout<<"PACKAGE CODE :"<<PACKAGE_NUMBER<<endl;
+
+    cout<<"PRICE :"<<PRICE<<endl;
+
+    cout<<"DURATION :"<<DURATION<<endl;
+
+    cout<<"MODE :"<<MODE_NAME<<endl;
+
+    cout<<"MODE NUMBER :"<<MODE_NUMBER<<endl;
+
+    cout<<"NUMBER OF ADULT PASSENGERS :"<<NO_OF_PASS_10<<endl;
+
+    cout<<"NUMBER OF TODLER PASSENGERS :"<<NO_OF_PASS_below_10<<endl;
+
+    cout<<"HOTEL NUMBER :"<<HOTEL_NUMBER<<endl;
+
+    cout<<"HOTEL NAME :"<<HOTEL_NAME<<endl;
+
+    cout<<"HOTEL PRICE PER DAY :"<<HOTEL_PRICE<<endl;
+
+}
+
+
+void pricing ()
+{
+ if(PACKAGE_NUMBER==0)
+ {
+     cout<<"SERVER ISSUE!! YOUR PACKAGE IS NOT EVEN SELECTED"<<endl;
+     return;
+ }
+
+ TOTAL_PRICE=(PRICE*NO_OF_PASS_below_10)/2 + (PRICE*NO_OF_PASS_10) +MODE_EXTRA_TAX;
+
+ HOTEL_PRICE= HOTEL_PRICE*(NO_OF_PASS_below_10 + NO_OF_PASS_10)*DURATION;
+
+ TOTAL_PRICE=TOTAL_PRICE + HOTEL_PRICE;
+
+}
+
+void print_ticket()
+{
+      cout<<endl;
+     cout<<"$$$$ CONGRATULATIONS HERE IS YOUR TICKET $$$$"<<endl<<endl;
+
+    cout<<"NAME :                                "<<NAME<<endl;
+
+    cout<<"AGE :                                 "<<AGE<<endl;
+
+    cout<<"PACKAGE NAME :                        "<<PACKAGE_NAME<<endl;
+
+    cout<<"PACKAGE CODE :                        "<<PACKAGE_NUMBER<<endl;
+
+    cout<<"PRICE :                               "<<PRICE<<endl;
+
+    cout<<"DURATION :                            "<<DURATION<<endl;
+
+    cout<<"MODE :                                "<<MODE_NAME<<endl;
+
+    cout<<"MODE NUMBER :                         "<<MODE_NUMBER<<endl;
+
+    cout<<"NUMBER OF ADULT PASSENGERS :          "<<NO_OF_PASS_10<<endl;
+
+    cout<<"NUMBER OF TODLER PASSENGERS :         "<<NO_OF_PASS_below_10<<endl;
+
+    cout<<"HOTEL NUMBER :                        "<<HOTEL_NUMBER<<endl;
+
+    cout<<"HOTEL NAME :                          "<<HOTEL_NAME<<endl;
+
+    cout<<"HOTEL PRICE PER DAY FOR ALL :         "<<HOTEL_PRICE<<endl;
+
+    cout<<"TOTAL EXPENSE :                       "<<TOTAL_PRICE;
+}
+
+
+int main()
+{
+    person p;
+
+    p.add_node(1,"siddham",20,1001);
+    p.add_node(2,"rinisha verma",24,1003);
+    p.add_node(3,"prerna",26,1002);
+    p.add_node(4,"riya",24,1001);
+    p.add_node(5,"prateek",25,1003);
+    p.add_node(6,"aman",28,1001);
+    p.add_node(7,"naman",29,1001);
+    p.add_node(8,"hamad",23,1004);
+    p.add_node(9,"pulkit",24,1001);
+    p.add_node(10,"harsh",23,1001);
+
+
+    package pk;
+
+    pk.add_node_package(1001,"DUBAI",80000,4);
+    pk.add_node_package(1002,"AUSTRILIA",30000,5);
+    pk.add_node_package(1003,"SWITZERLAND",80000,8);
+    pk.add_node_package(1003,"CANADA VANKOVER",70000,8);
+    pk.add_node_package(1005,"WASHINGTON DC",90000,9);
+
+    mode m;
+
+    m.add_node_mode(1,2000,"seaways");
+    m.add_node_mode(2,4000,"airways");
+
+    hotel h;
+
+    h.add_node_hotel(1,2000,"3 STAR");
+
+    h.add_node_hotel(2,3000,"4 STAR");
+
+    h.add_node_hotel(3,4000,"5 STAR");
+
+    cout<<"WELCOME TO TRAVEL AT EASE"<<endl<<endl;
+    cout<<"LOG IN:"<<endl;
+
+    int x;
+    cout<<endl;
+    cout<<"Enter password : ";
+    cin>>x;
+    int fp;
+
+    cout<<endl;
+    fp=p.find_person(x);
+
+
+    if(!fp)
+    {
+       cout<<"Sorry we cannot recognise you!!"<<endl;
+       cout<<"You are new to us!!"<<endl;
+
+    }
+
+    cout<<endl<<"Enter 1 to see packages!!"<<endl;
+
+    int pkk;
+    cin>>pkk;
+    if(pkk==1)
+    {
+
+    pk.display_package();
+
+    }
+    else
+    {
+        cout<<"You entered wrong choice!!"<<endl;
+    }
+
+    int package_chosed;
+
+    cout<<endl<<"Enter the package number :";
+
+    cin>>package_chosed;
+    pk.selected_package(package_chosed);
+
+   cout<<"NOW WE REQUEST YOU TO CHOOSE THE MODE OF TRANSPORT!!"<<endl;
+
+  int md;
+    cout<<endl;
+  cout<<"enter 1 to see the modes!"<<endl;
+  cin>>md;
+
+
+  if(md==1)
+  {
+      m.display_mode();
+      int m_number;
+        cout<<endl;
+      cout<<"choose the mode number :";
+      cin>>m_number;
+      m.selected_mode(m_number);
+  }
+  else
+  {
+      cout<<"wrong choice entered!!";
+  }
+
+  cout<<"enter 1 to see hotels and residence!!"<<endl;
+  int hd;
+  cin>>hd;
+
+  if(hd==1)
+  {
+      h.display_hotel();
+      int h_number;
+        cout<<endl;
+      cout<<"choose the hotel number :";
+      cin>>h_number;
+      h.selected_hotel(h_number);
+  }
+  else
+  {
+      cout<<"wrong choice entered!!";
+  }
+
+if(fp==0)
+{
+      cout<<endl;
+        cout<<endl;
+    cout<<"SINCE YOU ARE NEW TO US!!!"<<endl;
+    cout<<"we request you to add your information!!";
+
+    char new_name[50];
+    int new_age;
+    int create_password;
+
+    cout<<endl<<"Enter your name:";
+    cin>>new_name;
+
+    strcpy(NAME,new_name);
+      cout<<endl;
+    cout<<"Enter your age: ";
+    cin>>new_age;
+    AGE=new_age;
+
+      cout<<endl;
+    cout<<"we request you to enter you desired unique password:";
+    cin>>create_password;
+    PASSWORD=create_password;
+
+
+}
+int num_of_passengers_above_10;
+cout<<endl<<"enter the number of adult passengers:";
+cin>>num_of_passengers_above_10;
+
+NO_OF_PASS_10=num_of_passengers_above_10;
+
+int no_of_pass_below_10;
+cout<<endl<<"enter the number of toddler passengers:";
+cin>>no_of_pass_below_10;
+
+NO_OF_PASS_below_10=no_of_pass_below_10;
+
+int info;
+  cout<<endl;
+cout<<"enter 1 to confirm all the details:"<<endl;
+cin>>info;
+
+ if(info==1)
+{
+    print_information();
+}
+int check;
+  cout<<endl;
+cout<<"enter 1 if all the information is correct!!"<<endl;
+cin>>check;
+
+
+if (check==1)
+{
+    int cal;
+      cout<<endl;
+    cout<<"enter 1 to allow us calculate all your expenses!!"<<endl;
+    cin>>cal;
+    if(cal==1)
+    {
+        pricing();
+    }
+}
+
+
+  cout<<endl;
+cout<<"EVERYTHING IS READY TO GO !!"<<endl;
+
+  cout<<endl;
+cout<<"enter 1 to get your tickets!"<<endl;
+
+int tic;
+cin>>tic;
+
+if(tic==1)
+{
+    cout<<endl;
+print_ticket();
+}
+
+}
+
